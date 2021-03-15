@@ -32,8 +32,8 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		camara = camaras->getCamara(0);
 	}
 
-	PatronSinusoidal* patronSinusoidalHorizontal = new PatronSinusoidal(0, 0, 0, 50, pantalla->getHeight(), pantalla->getWidth());
-	PatronSinusoidal* patronSinusoidalVertical = new PatronSinusoidal(1, 0, 0, 50, pantalla->getHeight(), pantalla->getWidth());
+	PatronSinusoidal* patronSinusoidalHorizontal = new PatronSinusoidal(VERTICAL, GREEN, 0, 50, pantalla->getHeight(), pantalla->getWidth());
+	PatronSinusoidal* patronSinusoidalVertical = new PatronSinusoidal(HORIZONTAL, WHITE, 0, 50, pantalla->getHeight(), pantalla->getWidth());
 
 	int cont = 0;
 	while (true) {
@@ -50,10 +50,6 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		waitKey(10);
 
 		if (ENABLE_CAMERA) camara->guardarImagenEnDisco(PATH, EXTENSION, cameraImage++, camara->getImage(camaras->getManager()));
-
-		//namedWindow("Display window", WINDOW_NORMAL);
-		//imshow("Display window", imagen);
-		//;
 	}
 
 	return 0;
