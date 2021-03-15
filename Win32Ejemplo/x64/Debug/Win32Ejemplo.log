@@ -1,0 +1,3 @@
+﻿  main.cpp
+d:\robotica\proyectos\patronesconcamara\win32ejemplo\main.cpp(22): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  Win32Ejemplo.vcxproj -> D:\robotica\proyectos\PatronesConCamara\x64\Debug\Win32Ejemplo.exe
