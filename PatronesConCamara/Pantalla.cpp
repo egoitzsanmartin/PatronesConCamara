@@ -38,7 +38,7 @@ int Pantalla::crearVentana(string className) {
 }
 
 void Pantalla::borrarImagen() {
-	InvalidateRect(hwnd, NULL, TRUE);
+	InvalidateRect(hwnd, NULL, FALSE);
 }
 
 HINSTANCE Pantalla::getHInstance() {

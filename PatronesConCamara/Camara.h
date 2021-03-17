@@ -29,6 +29,7 @@ public:
 	Device* getPDev();
 	Device* initializeDevice(DeviceManager devMgr);
 	void guardarImagenEnDisco(string path, string extension, int num, Mat imagen);
+	void cambiarTiempoDeExposicion(int tiempo, DeviceManager devMgr);
 };
 
 #endif

@@ -13,7 +13,7 @@ int cameraImage = 0;
 static const string PATH = "C:/Users/Aita/Documents/aruco";
 static const string EXTENSION = ".bmp";
 static const string CLASS_NAME = "myWindowClass";
-static const bool ENABLE_CAMERA = false;
+static const bool ENABLE_CAMERA = true;
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow) {
@@ -30,10 +30,11 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		camaras = new Camaras();
 		camaras->inicializarCamara(0);
 		camara = camaras->getCamara(0);
+		camara->cambiarTiempoDeExposicion(1000, camaras->getManager());
 	}
 
 	PatronSinusoidal* patronSinusoidalHorizontal = new PatronSinusoidal(VERTICAL, GREEN, 0, 50, pantalla->getHeight(), pantalla->getWidth());
-	PatronSinusoidal* patronSinusoidalVertical = new PatronSinusoidal(HORIZONTAL, WHITE, 0, 50, pantalla->getHeight(), pantalla->getWidth());
+	PatronSinusoidal* patronSinusoidalVertical = new PatronSinusoidal(HORIZONTAL, BLUE, 0, 50, pantalla->getHeight(), pantalla->getWidth());
 
 	int cont = 0;
 	while (true) {
@@ -42,12 +43,11 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		
 		if (cont++ % 2 == 0) {
 			patronSinusoidalHorizontal->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
-		}
-		else {
+		}else {
 			patronSinusoidalVertical->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
 		}
 
-		waitKey(10);
+		Sleep(30);
 
 		if (ENABLE_CAMERA) camara->guardarImagenEnDisco(PATH, EXTENSION, cameraImage++, camara->getImage(camaras->getManager()));
 	}

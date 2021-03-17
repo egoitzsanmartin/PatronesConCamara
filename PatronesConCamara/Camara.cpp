@@ -107,3 +107,10 @@ void Camara::guardarImagenEnDisco(string path, string extension, int num, Mat im
 	string imageNumber = to_string(num);
 	imwrite(path + "/img" + imageNumber + extension, imagen);
 }
+
+void Camara::cambiarTiempoDeExposicion(int tiempo, DeviceManager devMgr) {
+	pDev = devMgr.getDevice(index);
+	GenICam::AcquisitionControl ac(pDev);
+
+	ac.exposureTime.write(tiempo);
+}
