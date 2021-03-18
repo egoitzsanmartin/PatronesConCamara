@@ -1,6 +1,6 @@
 #include "PatronSinusoidal.h"
 
-PatronSinusoidal::PatronSinusoidal(int indexPatron, int indexColor, int phi0, int periodo, int rows, int cols) {
+PatronSinusoidal::PatronSinusoidal(int indexPatron, int indexColor, double phi0, double periodo, int rows, int cols) {
 	PatronSinusoidal::phi0 = phi0;
 	PatronSinusoidal::periodo = periodo;
 	PatronSinusoidal::w = 2 * atan(1) * 4;
@@ -46,24 +46,21 @@ double PatronSinusoidal::getCosValue(double j) {
 }
 
 Scalar PatronSinusoidal::getColor(int indexColor, double value) {
-	Scalar* color;
 	switch (indexColor) {
 	case 0:
-		color = new Scalar(value, value, value);
+		return Scalar(value, value, value);
 		break;
 	case 1:
-		color = new Scalar(0, 0, value);
+		return Scalar(0, 0, value);
 		break;
 	case 2:
-		color = new Scalar(0, value, 0);
+		return Scalar(0, value, 0);
 		break;
 	case 3:
 	default:
-		color = new Scalar(value, 0, 0);
+		return Scalar(value, 0, 0);
 		break;
 	}
-
-	return *color;
 }
 
 

@@ -20,7 +20,7 @@ public:
 	double phi0;
 	double periodo;
 	double w;
-	PatronSinusoidal(int indexPatron, int indexColor, int phi0, int periodo, int rows, int cols);
+	PatronSinusoidal(int indexPatron, int indexColor, double phi0, double periodo, int rows, int cols);
 	void generarPatronSinusoidalVertical(int rows, int cols, int indexColor);
 	void generarPatronSinusoidalHorizontal(int rows, int cols, int indexColor);
 	Scalar getColor(int indexColor, double value);

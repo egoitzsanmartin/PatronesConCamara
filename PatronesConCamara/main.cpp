@@ -14,6 +14,7 @@ static const string PATH = "C:/Users/Aita/Documents/aruco";
 static const string EXTENSION = ".bmp";
 static const string CLASS_NAME = "myWindowClass";
 static const bool ENABLE_CAMERA = true;
+static const int N = 100;
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow) {
@@ -25,32 +26,35 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Camaras* camaras;
 	Camara* camara;
 
-	if(ENABLE_CAMERA){
+	if (ENABLE_CAMERA) {
 
 		camaras = new Camaras();
 		camaras->inicializarCamara(0);
 		camara = camaras->getCamara(0);
-		camara->cambiarTiempoDeExposicion(1000, camaras->getManager());
+		camara->cambiarTiempoDeExposicion(30000, camaras->getManager());
 	}
 
-	PatronSinusoidal* patronSinusoidalHorizontal = new PatronSinusoidal(VERTICAL, GREEN, 0, 50, pantalla->getHeight(), pantalla->getWidth());
-	PatronSinusoidal* patronSinusoidalVertical = new PatronSinusoidal(HORIZONTAL, BLUE, 0, 50, pantalla->getHeight(), pantalla->getWidth());
+	Patron* patrones[N];
 
-	int cont = 0;
-	while (true) {
+	double phi0 = (2 * (atan(1) * 4) / N) * 0;
+
+	for (int i = 0; i < N; i++) {
+		patrones[i] = new PatronSinusoidal(VERTICAL, GREEN, phi0, 50, pantalla->getHeight(), pantalla->getWidth());
+		phi0 = (2 * (atan(1) * 4) / N) * i;
+	}
+
+	for(int i = 0; i < N; i++) {
 	
 		pantalla->borrarImagen();
 		
-		if (cont++ % 2 == 0) {
-			patronSinusoidalHorizontal->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
-		}else {
-			patronSinusoidalVertical->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
-		}
+		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
 
 		Sleep(30);
 
 		if (ENABLE_CAMERA) camara->guardarImagenEnDisco(PATH, EXTENSION, cameraImage++, camara->getImage(camaras->getManager()));
 	}
+
+	getchar();
 
 	return 0;
 }
