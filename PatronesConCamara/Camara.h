@@ -13,23 +13,23 @@ using namespace std;
 using namespace cv;
 using namespace mvIMPACT::acquire;
 
-bool isDeviceSupportedBySample(const Device* const pDev);
-
 class Camara
 {
 private:
 	int getDataType(TImageBufferPixelFormat format);
 	
 public:
+	DeviceManager devMgr;
 	Device* pDev;
 	int index;
 
-	Camara(int index);
-	Mat getImage(DeviceManager devMgr);
+	Camara(int index, DeviceManager devMgr);
+	Mat getImage();
 	Device* getPDev();
-	Device* initializeDevice(DeviceManager devMgr);
+	Device* initializeDevice();
 	void guardarImagenEnDisco(string path, string extension, int num, Mat imagen);
-	void cambiarTiempoDeExposicion(int tiempo, DeviceManager devMgr);
+	void cambiarTiempoDeExposicion(int tiempo);
+	bool isDeviceSupportedBySample(const Device* const pDev);
 };
 
 #endif

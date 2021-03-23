@@ -12,8 +12,8 @@ Camaras::Camaras() {
 }
 
 void Camaras::inicializarCamara(int index) {
-	Camara* camara = new Camara(index);
-	camara->initializeDevice(devMgr);
+	Camara* camara = new Camara(index, devMgr);
+	camara->initializeDevice();
 	listaDispositivos.emplace_back(camara);
 }
 

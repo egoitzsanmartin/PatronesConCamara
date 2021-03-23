@@ -8,12 +8,13 @@
 #include "InicializarPantalla.h"
 #include "Camara.h"
 #include "Camaras.h"
+#include "Secuencia.h"
+#include "SecuenciaSinusoidal.h"
 
-int cameraImage = 0;
 static const string PATH = "C:/Users/Aita/Documents/aruco";
 static const string EXTENSION = ".bmp";
-static const string CLASS_NAME = "myWindowClass";
 static const bool ENABLE_CAMERA = false;
+static const string CLASS_NAME = "myWindowClass";
 static const int N = 100;
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -23,36 +24,18 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	Pantalla* pantalla = new Pantalla(hInstance, CLASS_NAME);
 	pantalla->crearVentana(CLASS_NAME);
 
-	Camaras* camaras;
-	Camara* camara;
+	Camaras* camaras = NULL;
+	Camara* camara = NULL;
 
 	if (ENABLE_CAMERA) {
-
 		camaras = new Camaras();
 		camaras->inicializarCamara(0);
 		camara = camaras->getCamara(0);
-		camara->cambiarTiempoDeExposicion(30000, camaras->getManager());
+		camara->cambiarTiempoDeExposicion(30000);
 	}
 
-	Patron* patrones[N];
-
-	double phi0 = (2 * (atan(1) * 4) / N) * 0;
-
-	for (int i = 0; i < N; i++) {
-		patrones[i] = new PatronSinusoidal(VERTICAL, GREEN, phi0, 50, pantalla->getHeight(), pantalla->getWidth());
-		phi0 = (2 * (atan(1) * 4) / N) * i;
-	}
-
-	for(int i = 0; i < N; i++) {
-	
-		pantalla->borrarImagen();
-		
-		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
-
-		Sleep(30);
-
-		if (ENABLE_CAMERA) camara->guardarImagenEnDisco(PATH, EXTENSION, cameraImage++, camara->getImage(camaras->getManager()));
-	}
+	SecuenciaSinusoidal* secuencia = new SecuenciaSinusoidal(VERTICAL, GREEN, 50, pantalla, N);
+	secuencia->ejecutarSecuencia(pantalla, camara, PATH, EXTENSION, ENABLE_CAMERA);
 
 	return 0;
 }

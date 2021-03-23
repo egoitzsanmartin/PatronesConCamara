@@ -1,10 +1,11 @@
 #include "Camara.h"
 
-Camara::Camara(int index){
+Camara::Camara(int index, DeviceManager devMgr){
 	Camara::index = index;
+	Camara::devMgr = devMgr;
 }
 
-Device* Camara::initializeDevice(DeviceManager devMgr) {
+Device* Camara::initializeDevice() {
 
 	pDev = devMgr.getDevice(index);
 
@@ -38,7 +39,7 @@ Device* Camara::initializeDevice(DeviceManager devMgr) {
 }
 
 
-Mat Camara::getImage(DeviceManager devMgr) {
+Mat Camara::getImage() {
 	pDev = devMgr.getDevice(index);
 	helper::RequestProvider requestProvider(pDev);
 	requestProvider.acquisitionStart();
@@ -57,7 +58,7 @@ Device* Camara::getPDev() {
 }
 
 //No se puede definir en el .h
-bool isDeviceSupportedBySample(const Device* const pDev)
+bool Camara::isDeviceSupportedBySample(const Device* const pDev)
 //-----------------------------------------------------------------------------
 {
 	if (!pDev->interfaceLayout.isValid() &&
@@ -108,7 +109,7 @@ void Camara::guardarImagenEnDisco(string path, string extension, int num, Mat im
 	imwrite(path + "/img" + imageNumber + extension, imagen);
 }
 
-void Camara::cambiarTiempoDeExposicion(int tiempo, DeviceManager devMgr) {
+void Camara::cambiarTiempoDeExposicion(int tiempo) {
 	pDev = devMgr.getDevice(index);
 	GenICam::AcquisitionControl ac(pDev);
 

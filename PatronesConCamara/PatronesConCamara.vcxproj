@@ -127,6 +127,8 @@
     <ClCompile Include="Patron.cpp" />
     <ClCompile Include="PatronColor.cpp" />
     <ClCompile Include="PatronSinusoidal.cpp" />
+    <ClCompile Include="Secuencia.cpp" />
+    <ClCompile Include="SecuenciaSinusoidal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camara.h" />
@@ -136,6 +138,8 @@
     <ClInclude Include="Pantalla.h" />
     <ClInclude Include="Patron.h" />
     <ClInclude Include="PatronColor.h" />
+    <ClInclude Include="Secuencia.h" />
+    <ClInclude Include="SecuenciaSinusoidal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
