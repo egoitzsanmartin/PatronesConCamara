@@ -1,8 +1,7 @@
-﻿  main.cpp
-  Automatically linking with mvDeviceManager.lib
+﻿  Pantalla.cpp
   Generando código
-  355 of 1518 functions (23.4%) were compiled, the rest were copied from previous compilation.
+  2 of 1518 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    32 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   PatronesConCamara.vcxproj -> D:\robotica\proyectos\PatronesConCamara\x64\Release\PatronesConCamara.exe

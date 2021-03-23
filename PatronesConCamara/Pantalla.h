@@ -12,6 +12,8 @@ private:
 	HWND hwnd;
 	HINSTANCE hInstance;
 	string className;
+	int x;
+	int y;
 	int width;
 	int height;
 

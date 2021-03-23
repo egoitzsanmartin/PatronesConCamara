@@ -13,14 +13,14 @@ int cameraImage = 0;
 static const string PATH = "C:/Users/Aita/Documents/aruco";
 static const string EXTENSION = ".bmp";
 static const string CLASS_NAME = "myWindowClass";
-static const bool ENABLE_CAMERA = true;
+static const bool ENABLE_CAMERA = false;
 static const int N = 100;
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow) {
 
-	Pantalla* pantalla = new Pantalla(hInstance, CLASS_NAME);
 	registrarVentana(hInstance, CLASS_NAME);
+	Pantalla* pantalla = new Pantalla(hInstance, CLASS_NAME);
 	pantalla->crearVentana(CLASS_NAME);
 
 	Camaras* camaras;
@@ -53,8 +53,6 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		if (ENABLE_CAMERA) camara->guardarImagenEnDisco(PATH, EXTENSION, cameraImage++, camara->getImage(camaras->getManager()));
 	}
-
-	getchar();
 
 	return 0;
 }
