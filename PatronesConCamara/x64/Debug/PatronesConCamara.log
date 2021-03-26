@@ -1,2 +1,3 @@
-﻿  Pantalla.cpp
+﻿  SecuenciaColor.cpp
+  Automatically linking with mvDeviceManager.lib
   PatronesConCamara.vcxproj -> D:\robotica\proyectos\PatronesConCamara\x64\Debug\PatronesConCamara.exe

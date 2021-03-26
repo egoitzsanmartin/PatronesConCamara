@@ -1,33 +1,15 @@
 #include "Patron.h"
 
-HBRUSH Patron::getBrush() {
-	return brush;
-}
-
-void Patron::cargarPatron(HWND hwnd) {
-
-	PAINTSTRUCT ps;
-	HDC hdc = BeginPaint(hwnd, &ps);
-
-	// All painting occurs here, between BeginPaint and EndPaint.
-
-	FillRect(hdc, &ps.rcPaint, (HBRUSH) brush);
-
-	EndPaint(hwnd, &ps);
-}
-
-void Patron::cargarPatronBitmap(HWND hwnd, int width, int height) {
+void Patron::cargarPatronBitmap(HWND hwnd, Pantalla* pantalla) {
 
 	PAINTSTRUCT ps;
 	HDC hdc = BeginPaint(hwnd, &ps);
 	HDC hdcMem;
 
-	// All painting occurs here, between BeginPaint and EndPaint.
-
 	hdcMem = CreateCompatibleDC(hdc);
 	SelectObject(hdcMem, bitmap);
 	//StretchBlt(hdc, 0, 0, 1600, 900, hdcMem, 0, 0, Patron::matriz.cols, Patron::matriz.rows, SRCCOPY); //https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-stretchblt
-	BitBlt(hdc, 0, 0, width, height, hdcMem, 0, 0, SRCCOPY);
+	BitBlt(hdc, 0, 0, pantalla->getWidth(), pantalla->getWidth(), hdcMem, 0, 0, SRCCOPY);
 	DeleteDC(hdcMem);
 
 	EndPaint(hwnd, &ps);
@@ -109,5 +91,23 @@ auto Patron::matToBmp(Mat frame) -> HBITMAP
 	else
 	{
 		return nullptr;
+	}
+}
+
+Scalar Patron::getColor(int indexColor, double intensidad) {
+	switch (indexColor) {
+	case 0:
+		return Scalar(intensidad, intensidad, intensidad);
+		break;
+	case 1:
+		return Scalar(0, 0, intensidad);
+		break;
+	case 2:
+		return Scalar(0, intensidad, 0);
+		break;
+	case 3:
+	default:
+		return Scalar(intensidad, 0, 0);
+		break;
 	}
 }

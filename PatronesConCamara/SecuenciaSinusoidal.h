@@ -14,7 +14,11 @@ class SecuenciaSinusoidal : public Secuencia
 {
 
 public:
-	SecuenciaSinusoidal(int indexPatron, int indexColor, double periodo, Pantalla* pantalla, int n);
+	int indexPatron;
+	double periodo;
+	SecuenciaSinusoidal(int indexPatron, int indexColor, double periodo, int n, Pantalla* pantalla);
+	void ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string path, string extension, bool enable_camera) override;
+	int getIndexPatron();
 };
 
 #endif

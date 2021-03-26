@@ -128,6 +128,7 @@
     <ClCompile Include="PatronColor.cpp" />
     <ClCompile Include="PatronSinusoidal.cpp" />
     <ClCompile Include="Secuencia.cpp" />
+    <ClCompile Include="SecuenciaColor.cpp" />
     <ClCompile Include="SecuenciaSinusoidal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
     <ClInclude Include="Patron.h" />
     <ClInclude Include="PatronColor.h" />
     <ClInclude Include="Secuencia.h" />
+    <ClInclude Include="SecuenciaColor.h" />
     <ClInclude Include="SecuenciaSinusoidal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

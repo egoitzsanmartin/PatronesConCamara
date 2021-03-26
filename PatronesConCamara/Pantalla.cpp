@@ -41,11 +41,12 @@ Pantalla::Pantalla(HINSTANCE hInstance, string className) {
 		Pantalla::x = option2.left;
 		Pantalla::y = option2.top;
 	}else {
-		cout << "Display Monitor not found." << endl;
-		//cin.get();
+		//cout << "Display Monitor not found." << endl;		// Comentar para desarrollo
+		//cin.get();											//
+
 		Pantalla::width = option1.right - option1.left;     //  
 		Pantalla::height = option1.bottom - option1.top;	  // Descomentar solo para desarrollo
-		Pantalla::x = option1.left;							  //
+		Pantalla::x = option1.left;						  //
 		Pantalla::y = option1.top;						  //
 	}
 }

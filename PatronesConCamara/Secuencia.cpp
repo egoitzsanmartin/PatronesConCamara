@@ -5,8 +5,13 @@ void Secuencia::ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string pat
 
 	for (int i = 0; i < n; i++) {
 		pantalla->borrarImagen();
-		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla->getWidth(), pantalla->getHeight());
+		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
 		Sleep(30);
 		if (enable_camera) camara->guardarImagenEnDisco(path, extension, cameraImage++, camara->getImage());
 	}
+}
+
+
+int Secuencia::getIndexColor() {
+	return indexColor;
 }

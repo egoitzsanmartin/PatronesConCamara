@@ -13,7 +13,7 @@ PatronSinusoidal::PatronSinusoidal(int indexPatron, int indexColor, double phi0,
 			generarPatronSinusoidalHorizontal(rows, cols, indexColor);
 			break;
 	}
-	bitmap = Patron::matToBmp(*matriz);
+	bitmap = matToBmp(*matriz);
 	//bitmap = (HBITMAP)LoadImage(NULL, "C:/Users/Aita/Documents/aruco/img.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 }
 
@@ -43,24 +43,6 @@ void PatronSinusoidal::generarPatronSinusoidalHorizontal(int rows, int cols, int
 
 double PatronSinusoidal::getCosValue(double j) {
 	return (1 + cos((w / periodo) * j + phi0))*255/2;
-}
-
-Scalar PatronSinusoidal::getColor(int indexColor, double value) {
-	switch (indexColor) {
-	case 0:
-		return Scalar(value, value, value);
-		break;
-	case 1:
-		return Scalar(0, 0, value);
-		break;
-	case 2:
-		return Scalar(0, value, 0);
-		break;
-	case 3:
-	default:
-		return Scalar(value, 0, 0);
-		break;
-	}
 }
 
 

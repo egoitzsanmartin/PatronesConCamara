@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include "Pantalla.h"
 
 #ifndef PATRON_H
 #define PATRON_H
@@ -12,13 +13,11 @@ using namespace cv;
 class Patron
 {
 public:
-	HBRUSH brush;
 	HBITMAP bitmap;
 	Mat* matriz;
-	void cargarPatron(HWND hwnd);
-	void cargarPatronBitmap(HWND hwnd, int width, int height);
+	void cargarPatronBitmap(HWND hwnd, Pantalla* pantalla);
 	auto matToBmp(Mat frame) -> HBITMAP;
-	HBRUSH getBrush();
+	Scalar getColor(int indexColor, double intensidad);
 };
 
 #endif
