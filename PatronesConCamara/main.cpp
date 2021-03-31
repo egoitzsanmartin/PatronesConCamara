@@ -1,8 +1,18 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#if (_MSC_VER >= 1915)
+#define no_init_all deprecated
+#endif
+
 #include <windows.h>
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector> 
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <time.h>
 #include "Patron.h"
 #include "PatronColor.h"
 #include "PatronSinusoidal.h"
@@ -14,18 +24,16 @@
 #include "SecuenciaSinusoidal.h"
 #include "SecuenciaColor.h"
 
-#if (_MSC_VER >= 1915)
-#define no_init_all deprecated
-#endif
 
-static const string PATH = "C:/Users/Aita/Documents/experimento";
-static const string CONFIG_PATH = "C:/Users/Aita/Documents/experimento/config/config.txt";
+static const string ROOT_PATH = "C:/Users/Aita/Documents/exp";
+static const string CONFIG_PATH = "C:/Users/Aita/Documents/config.txt";
 static const string EXTENSION = ".bmp";
-static const bool ENABLE_CAMERA = false;
+static const bool ENABLE_CAMERA = true;
 static const string CLASS_NAME = "myWindowClass";
-static const int N = 100;
 
 vector<vector<string>> leerFichero();
+void waitForKeyThread(bool* end);
+string getTimestamp();
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -40,7 +48,9 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 		camaras = new Camaras();
 		camaras->inicializarCamara(0);
 		camara = camaras->getCamara(0);
-		camara->cambiarTiempoDeExposicion(30000);
+		camara->cambiarTiempoDeExposicion(300000);
+		camara->cambiarAGrayscale();
+		camara->cambiarGanancia(6);
 	}
 
 	vector<vector<string>> lines = leerFichero();
@@ -92,9 +102,27 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 		}
 	}
 
-	for (auto const& secuencia : secuencias) {
-		secuencia->ejecutarSecuencia(pantalla, camara, PATH, EXTENSION, ENABLE_CAMERA);
+	bool end = false;
+	thread keyWait(waitForKeyThread, &end);
+	int repeticiones = 0;
+	string path;
+	//chrono::time_point<chrono::system_clock> now = chrono::system_clock::now();
+	//time_t now_c = chrono::system_clock::to_time_t(now);
+	//string now_string = to_string(now_c);
+	string time = getTimestamp();
+
+	while (true) {	
+		for (auto const& secuencia : secuencias) {
+			path = ROOT_PATH + "-" + time + "-" + to_string(repeticiones);
+			secuencia->ejecutarSecuencia(pantalla, camara, path, EXTENSION, ENABLE_CAMERA);
+		}
+		repeticiones++;
+		if (end) {
+			break;
+		}
 	}
+	
+	keyWait.join();
 
 	return 0;
 }
@@ -136,4 +164,38 @@ vector<vector<string>> leerFichero() {
 	input.close();
 
 	return lines;
+}
+
+void waitForKeyThread(bool* end) {
+	cout << "Press [INTRO] to end the program: ";
+	getchar();
+	*end = true;
+	cout << endl << "Waiting for sequence to end... ";
+}
+
+string getTimestamp() {
+	auto t = time(nullptr);
+	auto tm = *localtime(&t);
+
+	char mes[2];
+	char dia[2];
+	char h[2];
+	char m[2];
+	char s[2];
+
+	sprintf_s(mes, 10, "%02d", tm.tm_mon + 1);
+	sprintf_s(dia, 10, "%02d", tm.tm_mday);
+	sprintf_s(h, 10, "%02d", tm.tm_hour);
+	sprintf_s(m, 10, "%02d", tm.tm_min);
+	sprintf_s(s, 10, "%02d", tm.tm_sec);
+
+	string mesString = mes;
+	string diaString = dia;
+	string hString = h;
+	string mString = m;
+	string sString = s;
+
+	string now_string = to_string(tm.tm_year + 1900) + "." + mesString + "." + diaString + "-" + hString + "." + mString + "." + sString;
+
+	return now_string;
 }

@@ -2,15 +2,15 @@
 
 SecuenciaSinusoidal::SecuenciaSinusoidal(int indexPatron, int indexColor, double periodo, int n, Pantalla* pantalla) {
 	Secuencia::n = n;
-	double phi0 = (2 * (atan(1) * 4) / n) * 0;
+	double phi0;
 	Secuencia::patrones = new Patron*[n];
 	Secuencia::indexColor = indexColor;
 	SecuenciaSinusoidal::indexPatron = indexPatron;
 	SecuenciaSinusoidal::periodo = periodo;
 
 	for (int i = 0; i < n; i++) {
-		patrones[i] = new PatronSinusoidal(indexPatron, indexColor, phi0, periodo, pantalla->getHeight(), pantalla->getWidth());
 		phi0 = (2 * (atan(1) * 4) / n) * i;
+		patrones[i] = new PatronSinusoidal(indexPatron, indexColor, phi0, periodo, pantalla->getHeight(), pantalla->getWidth());
 	}
 }
 
@@ -29,6 +29,19 @@ void SecuenciaSinusoidal::ejecutarSecuencia(Pantalla* pantalla, Camara* camara, 
 	}
 	else if (indexPatron == HORIZONTAL){
 		path = path + "/H";
+	}
+
+	if (indexColor == RED) {
+		path = path + "/R/";
+	}
+	else if (indexColor == GREEN) {
+		path = path + "/G/";
+	}
+	else if (indexColor == BLUE) {
+		path = path + "/B/";
+	}
+	else if (indexColor == WHITE) {
+		path = path + "/W/";
 	}
 
 	for (int i = 0; i < n; i++) {

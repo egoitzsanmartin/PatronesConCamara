@@ -5,6 +5,8 @@
 #include <vector>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include <direct.h>
+#include <windows.h>
 
 #ifndef CAMARA_H
 #define CAMARA_H
@@ -29,7 +31,11 @@ public:
 	Device* initializeDevice();
 	void guardarImagenEnDisco(string path, string extension, int num, Mat imagen);
 	void cambiarTiempoDeExposicion(int tiempo);
+	void cambiarGanancia(int ganancia);
+	void cambiarAGrayscale();
 	bool isDeviceSupportedBySample(const Device* const pDev);
+	void createDirectory(string path);
+
 };
 
 #endif

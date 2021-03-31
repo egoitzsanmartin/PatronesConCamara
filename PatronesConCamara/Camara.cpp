@@ -106,7 +106,16 @@ int Camara::getDataType(TImageBufferPixelFormat format) {
 
 void Camara::guardarImagenEnDisco(string path, string extension, int num, Mat imagen) {
 	string imageNumber = to_string(num);
-	imwrite(path + "/img" + imageNumber + extension, imagen);
+
+	if (GetFileAttributesA(path.c_str()) == INVALID_FILE_ATTRIBUTES) {
+		createDirectory(path);
+	}
+	char buf[10];
+	int periodoInt = num;
+	sprintf_s(buf, 10, "%04d", periodoInt);
+
+	string periodoString = buf;
+	imwrite(path + "img" + periodoString.c_str() + extension, imagen);
 }
 
 void Camara::cambiarTiempoDeExposicion(int tiempo) {
@@ -114,4 +123,37 @@ void Camara::cambiarTiempoDeExposicion(int tiempo) {
 	GenICam::AcquisitionControl ac(pDev);
 
 	ac.exposureTime.write(tiempo);
+}
+
+void Camara::cambiarGanancia(int ganancia) {
+	pDev = devMgr.getDevice(index);
+	GenICam::AnalogControl anc(pDev);
+	anc.gainAuto.writeS("Off");
+	anc.gain.write(ganancia);
+}
+
+void Camara::cambiarAGrayscale() {
+	pDev = devMgr.getDevice(index);
+	ImageProcessing ip(pDev);
+	ip.colorProcessing.writeS("ColorBayerToMono");
+}
+
+void Camara::createDirectory(string path) {
+	size_t pos_it = 0;
+	size_t pos = 0;
+	string delimiter = "/";
+	string token;
+	const char* dir;
+	string iterator = path;
+
+	while ((pos_it = iterator.find(delimiter)) != string::npos) {
+		pos += pos_it + 1;
+		token = path.substr(0, pos);
+		if (GetFileAttributesA(token.c_str()) == INVALID_FILE_ATTRIBUTES) {
+			dir = token.c_str();
+			_mkdir(dir);
+		}
+		iterator.erase(0, pos_it + delimiter.length());
+	}
+	
 }

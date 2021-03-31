@@ -18,6 +18,19 @@ void SecuenciaColor::ejecutarSecuencia(Pantalla* pantalla, Camara* camara, strin
 	int cameraImage = 0;
 	path = path + "/color";
 
+	if (indexColor == RED) {
+		path = path + "/R/";
+	}
+	else if (indexColor == GREEN) {
+		path = path + "/G/";
+	}
+	else if (indexColor == BLUE) {
+		path = path + "/B/";
+	}
+	else if (indexColor == WHITE) {
+		path = path + "/W/";
+	}
+
 	for (int i = 0; i < n; i++) {
 		pantalla->borrarImagen();
 		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
