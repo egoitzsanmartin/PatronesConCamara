@@ -18,7 +18,7 @@ public:
 	Patron** patrones;
 	int n;
 	int indexColor;
-	virtual void ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string path, string extension, bool enable_camera);
+	virtual void ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, string path, string extension, bool enable_camera);
 	int getIndexColor();
 };
 

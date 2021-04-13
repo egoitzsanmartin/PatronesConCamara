@@ -17,6 +17,20 @@ void Camaras::inicializarCamara(int index) {
 	listaDispositivos.emplace_back(camara);
 }
 
+void Camaras::inicializarTodasLasCamaras() {
+	for (int i = 0; i < devMgr.deviceCount(); i++) {
+		Camara* camara = new Camara(i, devMgr);
+		camara->initializeDevice();
+		listaDispositivos.emplace_back(camara);
+	}
+}
+
+void Camaras::guardarImagenesEnDisco(string path, string relativePath, string extension, int num) {
+	for (auto const& camara : listaDispositivos) {
+		camara->guardarImagenEnDisco(path, relativePath, extension, camara->index, num, camara->getImage());
+	}
+}
+
 Camara* Camaras::getCamara(int index) {
 
 	auto it = listaDispositivos.begin();

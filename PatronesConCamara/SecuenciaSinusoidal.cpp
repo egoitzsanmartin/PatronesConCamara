@@ -14,41 +14,42 @@ SecuenciaSinusoidal::SecuenciaSinusoidal(int indexPatron, int indexColor, double
 	}
 }
 
-void SecuenciaSinusoidal::ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string path, string extension, bool enable_camera) {
+void SecuenciaSinusoidal::ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, string path, string extension, bool enable_camera) {
 	int cameraImage = 0;
 	char buf[10];
 	int periodoInt = periodo;
+	string relativePath;
 	sprintf_s(buf, 10, "%04d", periodoInt);
 
 	string periodoString = buf;
 
-	path = path + "/sinu/" + periodoString;
+	relativePath = "/sinu/" + periodoString;
 
 	if (indexPatron == VERTICAL) {
-		path = path + "/V";
+		relativePath = relativePath + "/V";
 	}
 	else if (indexPatron == HORIZONTAL){
-		path = path + "/H";
+		relativePath = relativePath + "/H";
 	}
 
 	if (indexColor == RED) {
-		path = path + "/R/";
+		relativePath = relativePath + "/R/";
 	}
 	else if (indexColor == GREEN) {
-		path = path + "/G/";
+		relativePath = relativePath + "/G/";
 	}
 	else if (indexColor == BLUE) {
-		path = path + "/B/";
+		relativePath = relativePath + "/B/";
 	}
 	else if (indexColor == WHITE) {
-		path = path + "/W/";
+		relativePath = relativePath + "/W/";
 	}
 
 	for (int i = 0; i < n; i++) {
 		pantalla->borrarImagen();
 		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
 		Sleep(30);
-		if (enable_camera) camara->guardarImagenEnDisco(path, extension, cameraImage++, camara->getImage());
+		if (enable_camera) camaras->guardarImagenesEnDisco(path, relativePath, extension, cameraImage++);
 	}
 }
 

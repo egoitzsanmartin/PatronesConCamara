@@ -19,7 +19,9 @@ public:
 
 	Camaras();
 	void inicializarCamara(int index);
+	void inicializarTodasLasCamaras();
 	Camara* getCamara(int index);
+	void guardarImagenesEnDisco(string path, string relativePath, string extension, int num);
 	DeviceManager getManager();
 };
 

@@ -8,7 +8,6 @@ Camara::Camara(int index, DeviceManager devMgr){
 Device* Camara::initializeDevice() {
 
 	pDev = devMgr.getDevice(index);
-
 	if (pDev == nullptr)
 	{
 		cout << "Unable to continue! Press [ENTER] to end the application" << endl;
@@ -104,17 +103,17 @@ int Camara::getDataType(TImageBufferPixelFormat format) {
 	return dataType;
 }
 
-void Camara::guardarImagenEnDisco(string path, string extension, int num, Mat imagen) {
+void Camara::guardarImagenEnDisco(string path, string relativePath, string extension, int cameraIndex, int num, Mat imagen) {
 	string imageNumber = to_string(num);
-
+	path = path + "/camara" + to_string(cameraIndex) + relativePath;
 	if (GetFileAttributesA(path.c_str()) == INVALID_FILE_ATTRIBUTES) {
 		createDirectory(path);
 	}
-	char buf[10];
+	char tmpPeriodo[10];
 	int periodoInt = num;
-	sprintf_s(buf, 10, "%04d", periodoInt);
+	sprintf_s(tmpPeriodo, 10, "%04d", periodoInt);
 
-	string periodoString = buf;
+	string periodoString = tmpPeriodo;
 	imwrite(path + "img" + periodoString.c_str() + extension, imagen);
 }
 

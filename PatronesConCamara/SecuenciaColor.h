@@ -14,7 +14,7 @@ class SecuenciaColor : public Secuencia
 
 public:
 	SecuenciaColor(int indexColor, int inicio, int fin, int salto, Pantalla* pantalla);
-	void ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string path, string extension, bool enable_camera) override;
+	void ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, string path, string extension, bool enable_camera) override;
 };
 
 #endif

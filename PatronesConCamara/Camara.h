@@ -29,7 +29,7 @@ public:
 	Mat getImage();
 	Device* getPDev();
 	Device* initializeDevice();
-	void guardarImagenEnDisco(string path, string extension, int num, Mat imagen);
+	void guardarImagenEnDisco(string path, string relativePath, string extension, int cameraIndex, int num, Mat imagen);
 	void cambiarTiempoDeExposicion(int tiempo);
 	void cambiarGanancia(int ganancia);
 	void cambiarAGrayscale();

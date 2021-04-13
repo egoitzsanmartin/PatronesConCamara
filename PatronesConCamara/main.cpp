@@ -8,11 +8,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector> 
-#include <chrono>
+#include <vector>
 #include <ctime>
 #include <iomanip>
-#include <time.h>
 #include "Patron.h"
 #include "PatronColor.h"
 #include "PatronSinusoidal.h"
@@ -42,15 +40,21 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 	pantalla->crearVentana(CLASS_NAME);
 
 	Camaras* camaras = NULL;
-	Camara* camara = NULL;
-
+	Camara* camara1 = NULL;
+	Camara* camara2 = NULL;
 	if (ENABLE_CAMERA) {
 		camaras = new Camaras();
-		camaras->inicializarCamara(0);
-		camara = camaras->getCamara(0);
-		camara->cambiarTiempoDeExposicion(300000);
-		camara->cambiarAGrayscale();
-		camara->cambiarGanancia(6);
+		camaras->inicializarTodasLasCamaras();
+
+		camara1 = camaras->getCamara(0);
+		camara1->cambiarTiempoDeExposicion(300000);
+		camara1->cambiarAGrayscale();
+		camara1->cambiarGanancia(6);
+
+		/*camara2 = camaras->getCamara(1);
+		camara2->cambiarTiempoDeExposicion(300000);
+		camara2->cambiarAGrayscale();
+		camara2->cambiarGanancia(6);*/
 	}
 
 	vector<vector<string>> lines = leerFichero();
@@ -114,7 +118,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 	while (true) {	
 		for (auto const& secuencia : secuencias) {
 			path = ROOT_PATH + "-" + time + "-" + to_string(repeticiones);
-			secuencia->ejecutarSecuencia(pantalla, camara, path, EXTENSION, ENABLE_CAMERA);
+			secuencia->ejecutarSecuencia(pantalla, camaras, path, EXTENSION, ENABLE_CAMERA);
 		}
 		repeticiones++;
 		if (end) {

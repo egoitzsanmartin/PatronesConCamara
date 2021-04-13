@@ -14,28 +14,30 @@ SecuenciaColor::SecuenciaColor(int indexColor, int inicio, int fin, int salto, P
 	}
 }
 
-void SecuenciaColor::ejecutarSecuencia(Pantalla* pantalla, Camara* camara, string path, string extension, bool enable_camera) {
+void SecuenciaColor::ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, string path, string extension, bool enable_camera) {
 	int cameraImage = 0;
-	path = path + "/color";
+	string relativePath;
+
+	relativePath = "/color";
 
 	if (indexColor == RED) {
-		path = path + "/R/";
+		relativePath = relativePath + "/R/";
 	}
 	else if (indexColor == GREEN) {
-		path = path + "/G/";
+		relativePath = relativePath + "/G/";
 	}
 	else if (indexColor == BLUE) {
-		path = path + "/B/";
+		relativePath = relativePath + "/B/";
 	}
 	else if (indexColor == WHITE) {
-		path = path + "/W/";
+		relativePath = relativePath + "/W/";
 	}
 
 	for (int i = 0; i < n; i++) {
 		pantalla->borrarImagen();
 		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
 		Sleep(30);
-		if (enable_camera) camara->guardarImagenEnDisco(path, extension, cameraImage++, camara->getImage());
+		if (enable_camera) camaras->guardarImagenesEnDisco(path, relativePath, extension, cameraImage++);
 	}
 }
 
