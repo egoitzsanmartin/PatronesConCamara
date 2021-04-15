@@ -3,7 +3,9 @@
 #include <mvIMPACT_acquire_helper.h>
 #include <iostream>
 #include <list>
+#include <thread>
 #include "Camara.h"
+#include "MyBarrier.h"
 
 #ifndef CAMARAS_H
 #define CAMARAS_H
@@ -22,6 +24,7 @@ public:
 	void inicializarTodasLasCamaras();
 	Camara* getCamara(int index);
 	void guardarImagenesEnDisco(string path, string relativePath, string extension, int num);
+	void ejecutarHilo(Camara* camara, string path, string relativePath, string extension, int num, MyBarrier* barrera);
 	DeviceManager getManager();
 };
 

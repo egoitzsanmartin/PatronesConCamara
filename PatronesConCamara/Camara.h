@@ -19,7 +19,7 @@ class Camara
 {
 private:
 	int getDataType(TImageBufferPixelFormat format);
-	
+	bool isDeviceSupportedBySample(const Device* const pDev);
 public:
 	DeviceManager devMgr;
 	Device* pDev;
@@ -33,8 +33,8 @@ public:
 	void cambiarTiempoDeExposicion(int tiempo);
 	void cambiarGanancia(int ganancia);
 	void cambiarAGrayscale();
-	bool isDeviceSupportedBySample(const Device* const pDev);
 	void createDirectory(string path);
+	int getIndex();
 
 };
 

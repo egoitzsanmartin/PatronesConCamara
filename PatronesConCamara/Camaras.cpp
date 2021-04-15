@@ -26,9 +26,20 @@ void Camaras::inicializarTodasLasCamaras() {
 }
 
 void Camaras::guardarImagenesEnDisco(string path, string relativePath, string extension, int num) {
+	MyBarrier* barrera = new MyBarrier(listaDispositivos.size());
+	list<thread> threads = {};
 	for (auto const& camara : listaDispositivos) {
-		camara->guardarImagenEnDisco(path, relativePath, extension, camara->index, num, camara->getImage());
+		threads.emplace_back(thread(&Camaras::ejecutarHilo, this, camara, path, relativePath, extension, num, barrera));
 	}
+
+	for (auto& thread : threads) {
+		thread.join();
+	}
+}
+
+void Camaras::ejecutarHilo(Camara* camara, string path, string relativePath, string extension, int num, MyBarrier* barrera) {
+	camara->guardarImagenEnDisco(path, relativePath, extension, camara->getIndex(), num, camara->getImage());
+	barrera->wait();
 }
 
 Camara* Camaras::getCamara(int index) {

@@ -156,3 +156,7 @@ void Camara::createDirectory(string path) {
 	}
 	
 }
+
+int Camara::getIndex() {
+	return index;
+}

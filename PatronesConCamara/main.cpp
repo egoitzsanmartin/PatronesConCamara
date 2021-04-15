@@ -22,7 +22,6 @@
 #include "SecuenciaSinusoidal.h"
 #include "SecuenciaColor.h"
 
-
 static const string ROOT_PATH = "C:/Users/Aita/Documents/exp";
 static const string CONFIG_PATH = "C:/Users/Aita/Documents/config.txt";
 static const string EXTENSION = ".bmp";
@@ -32,6 +31,8 @@ static const string CLASS_NAME = "myWindowClass";
 vector<vector<string>> leerFichero();
 void waitForKeyThread(bool* end);
 string getTimestamp();
+string crearPath(int repeticiones, string time);
+vector<Secuencia*> generarPatrones(Pantalla* pantalla);
 
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -40,87 +41,31 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 	pantalla->crearVentana(CLASS_NAME);
 
 	Camaras* camaras = NULL;
-	Camara* camara1 = NULL;
-	Camara* camara2 = NULL;
+
 	if (ENABLE_CAMERA) {
+		Camara* camara1 = NULL;
 		camaras = new Camaras();
 		camaras->inicializarTodasLasCamaras();
 
 		camara1 = camaras->getCamara(0);
-		camara1->cambiarTiempoDeExposicion(300000);
+		camara1->cambiarTiempoDeExposicion(100000);
 		camara1->cambiarAGrayscale();
 		camara1->cambiarGanancia(6);
-
-		/*camara2 = camaras->getCamara(1);
-		camara2->cambiarTiempoDeExposicion(300000);
-		camara2->cambiarAGrayscale();
-		camara2->cambiarGanancia(6);*/
 	}
-
-	vector<vector<string>> lines = leerFichero();
-	vector<Secuencia*> secuencias;
-	for (auto const& line : lines) {
-		int color;
-
-		if (line.at(0) == "SINUSOIDAL") {
-			int orientacion;
-
-			if (line.at(1) == "V") {
-				orientacion = VERTICAL;
-			}
-			else if(line.at(1) == "H"){
-				orientacion = HORIZONTAL;
-			}
-
-			if (line.at(2) == "R") {
-				color = RED;
-			}
-			else if (line.at(2) == "G") {
-				color = GREEN;
-			}
-			else if (line.at(2) == "B") {
-				color = BLUE;
-			}
-			else if (line.at(2) == "W") {
-				color = WHITE;
-			}
-
-			secuencias.push_back(new SecuenciaSinusoidal(orientacion, color, stoi(line.at(3)), stoi(line.at(4)), pantalla));
-		}
-		else if (line.at(0) == "COLOR") {
-
-			if (line.at(1) == "R") {
-				color = RED;
-			}
-			else if (line.at(1) == "G") {
-				color = GREEN;
-			}
-			else if (line.at(1) == "B") {
-				color = BLUE;
-			}
-			else if (line.at(1) == "W") {
-				color = WHITE;
-			}
-
-			secuencias.push_back(new SecuenciaColor(color, stoi(line.at(2)), stoi(line.at(3)), stoi(line.at(4)), pantalla));
-		}
-	}
-
+	vector<Secuencia*> secuencias = generarPatrones(pantalla);
 	bool end = false;
 	thread keyWait(waitForKeyThread, &end);
 	int repeticiones = 0;
 	string path;
-	//chrono::time_point<chrono::system_clock> now = chrono::system_clock::now();
-	//time_t now_c = chrono::system_clock::to_time_t(now);
-	//string now_string = to_string(now_c);
 	string time = getTimestamp();
 
-	while (true) {	
+	while (true) {
 		for (auto const& secuencia : secuencias) {
-			path = ROOT_PATH + "-" + time + "-" + to_string(repeticiones);
+			path = crearPath(repeticiones, time);
 			secuencia->ejecutarSecuencia(pantalla, camaras, path, EXTENSION, ENABLE_CAMERA);
 		}
 		repeticiones++;
+
 		if (end) {
 			break;
 		}
@@ -129,6 +74,10 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 	keyWait.join();
 
 	return 0;
+}
+
+string crearPath(int repeticiones, string time) {
+	return ROOT_PATH + "-" + time + "-" + to_string(repeticiones);
 }
 
 vector<vector<string>> leerFichero() {
@@ -202,4 +151,58 @@ string getTimestamp() {
 	string now_string = to_string(tm.tm_year + 1900) + "." + mesString + "." + diaString + "-" + hString + "." + mString + "." + sString;
 
 	return now_string;
+}
+
+vector<Secuencia*> generarPatrones(Pantalla* pantalla) {
+
+	vector<vector<string>> lines = leerFichero();
+	vector<Secuencia*> secuencias;
+	for (auto const& line : lines) {
+		int color;
+
+		if (line.at(0) == "SINUSOIDAL") {
+			int orientacion;
+
+			if (line.at(1) == "V") {
+				orientacion = VERTICAL;
+			}
+			else if (line.at(1) == "H") {
+				orientacion = HORIZONTAL;
+			}
+
+			if (line.at(2) == "R") {
+				color = RED;
+			}
+			else if (line.at(2) == "G") {
+				color = GREEN;
+			}
+			else if (line.at(2) == "B") {
+				color = BLUE;
+			}
+			else if (line.at(2) == "W") {
+				color = WHITE;
+			}
+
+			secuencias.push_back(new SecuenciaSinusoidal(orientacion, color, stoi(line.at(3)), stoi(line.at(4)), pantalla));
+		}
+		else if (line.at(0) == "COLOR") {
+
+			if (line.at(1) == "R") {
+				color = RED;
+			}
+			else if (line.at(1) == "G") {
+				color = GREEN;
+			}
+			else if (line.at(1) == "B") {
+				color = BLUE;
+			}
+			else if (line.at(1) == "W") {
+				color = WHITE;
+			}
+
+			secuencias.push_back(new SecuenciaColor(color, stoi(line.at(2)), stoi(line.at(3)), stoi(line.at(4)), pantalla));
+		}
+	}
+
+	return secuencias;
 }

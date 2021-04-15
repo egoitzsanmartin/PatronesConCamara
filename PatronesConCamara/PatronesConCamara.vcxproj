@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyBarrier.cpp" />
     <ClCompile Include="Camara.cpp" />
     <ClCompile Include="Camaras.cpp" />
     <ClCompile Include="InicializarPantalla.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="SecuenciaSinusoidal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyBarrier.h" />
     <ClInclude Include="Camara.h" />
     <ClInclude Include="Camaras.h" />
     <ClInclude Include="PatronSinusoidal.h" />
