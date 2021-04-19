@@ -38,18 +38,20 @@ Device* Camara::initializeDevice() {
 }
 
 
-Mat Camara::getImage() {
+void Camara::getImage(int n) {
 	pDev = devMgr.getDevice(index);
-	helper::RequestProvider requestProvider(pDev);
-	requestProvider.acquisitionStart();
-	shared_ptr<Request> pRequest = requestProvider.waitForNextRequest();
+	imagenes.clear();
+	for (int i = 0; i < n; i++) {
+		helper::RequestProvider requestProvider(pDev);
+		requestProvider.acquisitionStart();
+		shared_ptr<Request> pRequest = requestProvider.waitForNextRequest();
 
-	int dataType = getDataType(pRequest->imagePixelFormat.read());
-	Mat matriz;
-	matriz = Mat(Size(pRequest->imageWidth.read(), pRequest->imageHeight.read()), dataType, pRequest->imageData.read(), pRequest->imageLinePitch.read()).clone();
-	requestProvider.acquisitionStop();
-
-	return matriz;
+		int dataType = getDataType(pRequest->imagePixelFormat.read());
+		Mat matriz;
+		imagenes.emplace_front(Mat(Size(pRequest->imageWidth.read(), pRequest->imageHeight.read()), dataType, pRequest->imageData.read(), pRequest->imageLinePitch.read()).clone());
+	
+		requestProvider.acquisitionStop();
+	}
 }
 
 Device* Camara::getPDev() {
@@ -103,18 +105,24 @@ int Camara::getDataType(TImageBufferPixelFormat format) {
 	return dataType;
 }
 
-void Camara::guardarImagenEnDisco(string path, string relativePath, string extension, int cameraIndex, int num, Mat imagen) {
+void Camara::guardarImagenEnDisco(string path, string relativePath, string extension, int num) {
 	string imageNumber = to_string(num);
-	path = path + "/camara" + to_string(cameraIndex) + relativePath;
+	path = path + "/camara" + to_string(index) + relativePath;
 	if (GetFileAttributesA(path.c_str()) == INVALID_FILE_ATTRIBUTES) {
 		createDirectory(path);
 	}
-	char tmpPeriodo[10];
-	int periodoInt = num;
-	sprintf_s(tmpPeriodo, 10, "%04d", periodoInt);
+	for (int i = 0; i < num; i++) {
+		char tmpPeriodo[10];
+		int periodoInt = i;
+		sprintf_s(tmpPeriodo, 10, "%04d", periodoInt);
 
-	string periodoString = tmpPeriodo;
-	imwrite(path + "img" + periodoString.c_str() + extension, imagen);
+		string periodoString = tmpPeriodo;
+		cout << (imagenes.size());
+		Mat imagen = imagenes.front();
+		imwrite(path + "img" + periodoString.c_str() + extension, imagen);
+		imagenes.pop_front();
+	}
+
 }
 
 void Camara::cambiarTiempoDeExposicion(int tiempo) {

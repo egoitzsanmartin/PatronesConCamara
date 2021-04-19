@@ -1,5 +1,25 @@
-﻿  Camaras.cpp
+﻿  MyBarrier.cpp
+  Camara.cpp
+  Automatically linking with mvDeviceManager.lib
+  Camaras.cpp
   Automatically linking with mvDeviceManager.lib
 d:\robotica\proyectos\patronesconcamara\patronesconcamara\camaras.cpp(21): warning C4018: '<': no coinciden signed/unsigned
-d:\robotica\proyectos\patronesconcamara\patronesconcamara\camaras.cpp(29): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+  InicializarPantalla.cpp
+  main.cpp
+  Automatically linking with mvDeviceManager.lib
+  Pantalla.cpp
+  Patron.cpp
+  PatronColor.cpp
+d:\robotica\proyectos\patronesconcamara\patronesconcamara\patroncolor.cpp(8): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  PatronSinusoidal.cpp
+d:\robotica\proyectos\patronesconcamara\patronesconcamara\patronsinusoidal.cpp(27): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+d:\robotica\proyectos\patronesconcamara\patronesconcamara\patronsinusoidal.cpp(39): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+  Secuencia.cpp
+  Automatically linking with mvDeviceManager.lib
+  SecuenciaColor.cpp
+  Automatically linking with mvDeviceManager.lib
+  SecuenciaSinusoidal.cpp
+  Automatically linking with mvDeviceManager.lib
+d:\robotica\proyectos\patronesconcamara\patronesconcamara\secuenciasinusoidal.cpp(19): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+  Generando código...
   PatronesConCamara.vcxproj -> D:\robotica\proyectos\PatronesConCamara\x64\Debug\PatronesConCamara.exe

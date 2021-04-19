@@ -3,6 +3,7 @@
 #include <mvIMPACT_acquire_helper.h>
 #include <exampleHelper.h>
 #include <vector>
+#include <list>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <direct.h>
@@ -21,15 +22,16 @@ private:
 	int getDataType(TImageBufferPixelFormat format);
 	bool isDeviceSupportedBySample(const Device* const pDev);
 public:
+	list<Mat> imagenes;
 	DeviceManager devMgr;
 	Device* pDev;
 	int index;
 
 	Camara(int index, DeviceManager devMgr);
-	Mat getImage();
+	void getImage(int n);
 	Device* getPDev();
 	Device* initializeDevice();
-	void guardarImagenEnDisco(string path, string relativePath, string extension, int cameraIndex, int num, Mat imagen);
+	void guardarImagenEnDisco(string path, string relativePath, string extension, int num);
 	void cambiarTiempoDeExposicion(int tiempo);
 	void cambiarGanancia(int ganancia);
 	void cambiarAGrayscale();

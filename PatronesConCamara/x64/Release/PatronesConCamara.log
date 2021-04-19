@@ -1,10 +1,11 @@
-﻿  Camaras.cpp
+﻿  SecuenciaColor.cpp
   Automatically linking with mvDeviceManager.lib
-d:\robotica\proyectos\patronesconcamara\patronesconcamara\camaras.cpp(21): warning C4018: '<': no coinciden signed/unsigned
-d:\robotica\proyectos\patronesconcamara\patronesconcamara\camaras.cpp(29): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+  SecuenciaSinusoidal.cpp
+  Automatically linking with mvDeviceManager.lib
+d:\robotica\proyectos\patronesconcamara\patronesconcamara\secuenciasinusoidal.cpp(19): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
   Generando código
-  1 of 2389 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  0 of 2457 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   PatronesConCamara.vcxproj -> D:\robotica\proyectos\PatronesConCamara\x64\Release\PatronesConCamara.exe
