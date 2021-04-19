@@ -48,9 +48,9 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmd
 		camaras->inicializarTodasLasCamaras();
 
 		camara1 = camaras->getCamara(0);
-		camara1->cambiarTiempoDeExposicion(100000);
+		camara1->cambiarTiempoDeExposicion(30000);
 		camara1->cambiarAGrayscale();
-		camara1->cambiarGanancia(6);
+		camara1->cambiarGanancia(4);
 	}
 	vector<Secuencia*> secuencias = generarPatrones(pantalla);
 	bool end = false;

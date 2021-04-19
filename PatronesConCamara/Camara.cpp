@@ -40,17 +40,18 @@ Device* Camara::initializeDevice() {
 
 void Camara::getImage(int n) {
 	pDev = devMgr.getDevice(index);
-	helper::RequestProvider requestProvider(pDev);
-	requestProvider.acquisitionStart();
-	shared_ptr<Request> pRequest = requestProvider.waitForNextRequest();
-
-	int dataType = getDataType(pRequest->imagePixelFormat.read());
-	Mat matriz;
 	imagenes.clear();
 	for (int i = 0; i < n; i++) {
-		imagenes.emplace_back(Mat(Size(pRequest->imageWidth.read(), pRequest->imageHeight.read()), dataType, pRequest->imageData.read(), pRequest->imageLinePitch.read()).clone());
+		helper::RequestProvider requestProvider(pDev);
+		requestProvider.acquisitionStart();
+		shared_ptr<Request> pRequest = requestProvider.waitForNextRequest();
+
+		int dataType = getDataType(pRequest->imagePixelFormat.read());
+		Mat matriz;
+		imagenes.emplace_front(Mat(Size(pRequest->imageWidth.read(), pRequest->imageHeight.read()), dataType, pRequest->imageData.read(), pRequest->imageLinePitch.read()).clone());
+	
+		requestProvider.acquisitionStop();
 	}
-	requestProvider.acquisitionStop();
 }
 
 Device* Camara::getPDev() {
@@ -116,7 +117,10 @@ void Camara::guardarImagenEnDisco(string path, string relativePath, string exten
 		sprintf_s(tmpPeriodo, 10, "%04d", periodoInt);
 
 		string periodoString = tmpPeriodo;
-		imwrite(path + "img" + periodoString.c_str() + extension, imagenes.front());
+		cout << (imagenes.size());
+		Mat imagen = imagenes.front();
+		imwrite(path + "img" + periodoString.c_str() + extension, imagen);
+		imagenes.pop_front();
 	}
 
 }
