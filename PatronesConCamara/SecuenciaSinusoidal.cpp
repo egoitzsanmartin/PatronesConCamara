@@ -15,7 +15,6 @@ SecuenciaSinusoidal::SecuenciaSinusoidal(int indexPatron, int indexColor, double
 }
 
 void SecuenciaSinusoidal::ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, string path, string extension, bool enable_camera) {
-	int cameraImage = 0;
 	char buf[10];
 	int periodoInt = periodo;
 	string relativePath;
@@ -49,7 +48,10 @@ void SecuenciaSinusoidal::ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras
 		pantalla->borrarImagen();
 		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
 		Sleep(30);
-		if (enable_camera) camaras->guardarImagenesEnDisco(path, relativePath, extension, cameraImage++);
+		if (enable_camera) {
+			camaras->getImages(n);
+			camaras->guardarImagenesEnDisco(path, relativePath, extension, n);
+		}
 	}
 }
 

@@ -32,12 +32,19 @@ void SecuenciaColor::ejecutarSecuencia(Pantalla* pantalla, Camaras* camaras, str
 	else if (indexColor == WHITE) {
 		relativePath = relativePath + "/W/";
 	}
-
+	pantalla->borrarImagen();
+	patrones[0]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
 	for (int i = 0; i < n; i++) {
-		pantalla->borrarImagen();
-		patrones[i]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
+		
 		Sleep(30);
-		if (enable_camera) camaras->guardarImagenesEnDisco(path, relativePath, extension, cameraImage++);
+		if (enable_camera) {
+			camaras->getImages(n);
+			if (i + 1 < n) {
+				pantalla->borrarImagen();
+				patrones[i + 1]->cargarPatronBitmap(pantalla->getHwnd(), pantalla);
+			}
+			camaras->guardarImagenesEnDisco(path, relativePath, extension, n);
+		}
 	}
 }
 

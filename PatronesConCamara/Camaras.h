@@ -24,8 +24,10 @@ public:
 	void inicializarTodasLasCamaras();
 	Camara* getCamara(int index);
 	void guardarImagenesEnDisco(string path, string relativePath, string extension, int num);
-	void ejecutarHilo(Camara* camara, string path, string relativePath, string extension, int num, MyBarrier* barrera);
+	void ejecutarHiloDisco(Camara* camara, string path, string relativePath, string extension, int num);
+	void ejecutarHiloImagenes(Camara* camara, int num);
 	DeviceManager getManager();
+	void getImages(int n);
 };
 
 #endif
